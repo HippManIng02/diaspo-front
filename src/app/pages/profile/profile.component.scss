@@ -1,0 +1,9 @@
+.profile-stats { display: grid; grid-template-columns: repeat(4,1fr); background: #fff; border-radius: var(--radius-md); border: .5px solid var(--border); margin-bottom: 1rem; overflow: hidden; }
+.ps-item { text-align: center; padding: 1.1rem .75rem; border-right: .5px solid var(--border); &:last-child { border-right: none; } }
+.ps-num  { display: block; font-family: var(--font-display); font-size: 24px; color: var(--green-dark); font-weight: 600; }
+.ps-label{ font-size: 11px; color: var(--text-muted); }
+.resume-box { background: var(--green-light); border-left: 3px solid var(--green-mid); border-radius: var(--radius-sm); padding: .85rem 1rem; font-size: 13.5px; color: var(--green-dark); line-height: 1.65; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.legend { display: flex; gap: 12px; flex-wrap: wrap; }
+.legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-muted); }
+.ph-info { flex: 1; }

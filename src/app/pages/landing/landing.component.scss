@@ -1,0 +1,52 @@
+.hero-section { background: var(--green-dark); padding: 5rem 0 4rem; position: relative; overflow: hidden; }
+.hero-bg-pattern {
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle at 80% 20%, rgba(201,146,42,.12) 0%, transparent 50%),
+                    radial-gradient(circle at 10% 80%, rgba(46,125,82,.2) 0%, transparent 40%);
+}
+.hero-inner { display: grid; grid-template-columns: 1fr 420px; gap: 4rem; align-items: center; position: relative; z-index: 1; }
+.hero-eyebrow { margin-bottom: 1rem; }
+.hero-title { font-family: var(--font-display); font-size: 52px; line-height: 1.1; color: #fff; margin-bottom: 1.25rem; }
+.hero-accent { color: var(--gold-light); }
+.hero-desc { font-size: 17px; color: rgba(255,255,255,.75); margin-bottom: 2rem; max-width: 480px; line-height: 1.7; }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 2.5rem; }
+.hero-stats { display: flex; align-items: center; gap: 20px; }
+.hs-item { text-align: center; }
+.hs-num { display: block; font-family: var(--font-display); font-size: 26px; color: var(--gold-light); font-weight: 600; }
+.hs-label { font-size: 12px; color: rgba(255,255,255,.6); }
+.hs-sep { width: 1px; height: 36px; background: rgba(255,255,255,.2); }
+
+.hero-card-stack { display: flex; flex-direction: column; gap: 12px; }
+.profile-preview-card { background: #fff; border-radius: var(--radius-lg); padding: 1.25rem; box-shadow: var(--shadow-lg);
+  &.mini { display: flex; align-items: center; gap: 12px; padding: 1rem 1.25rem; }
+}
+.ppc-header { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 1rem; }
+.ppc-name { font-weight: 600; font-size: 15px; color: var(--ink); &.sm { font-size: 14px; } }
+.ppc-title { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.ppc-location { font-size: 11px; color: var(--gold); margin-top: 4px; }
+.ppc-skills { margin-bottom: 1rem; }
+.ppc-footer { display: flex; align-items: center; justify-content: space-between; }
+.ppc-exp { font-size: 11px; color: var(--text-muted); font-weight: 500; }
+
+.section-header { text-align: center; margin-bottom: 2.5rem; }
+.section-sub { color: var(--text-muted); font-size: 15px; margin-top: .5rem; }
+.steps-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+.step-card { background: #fff; border-radius: var(--radius-lg); padding: 2rem 1.5rem; border: .5px solid var(--border); text-align: center; position: relative; }
+.step-num { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); width: 28px; height: 28px; border-radius: 50%; background: var(--gold); color: #fff; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+.step-icon { font-size: 32px; margin-bottom: 1rem; }
+.step-title { font-family: var(--font-display); font-size: 17px; color: var(--green-dark); margin-bottom: .5rem; }
+.step-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+.sectors-grid { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.sector-chip { display: flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 30px; background: var(--gold-pale); border: 1px solid var(--border); font-size: 13px; font-weight: 500; }
+
+.cta-box { background: var(--green-dark); border-radius: var(--radius-xl); padding: 4rem; text-align: center; position: relative; overflow: hidden; }
+.cta-deco { position: absolute; right: -60px; top: -60px; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(201,146,42,.15), transparent 70%); }
+.cta-title { font-family: var(--font-display); font-size: 36px; color: #fff; margin-bottom: 1rem; line-height: 1.2; span { color: var(--gold-light); } }
+.cta-sub { color: rgba(255,255,255,.7); font-size: 15px; margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+.cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+.footer { background: var(--ink); padding: 1.5rem 0; }
+.footer-inner { display: flex; align-items: center; justify-content: space-between; }
+.footer .navbar-logo { color: #fff; font-family: var(--font-display); font-size: 22px; font-weight: 600; span { color: var(--gold); } }
+.footer-copy { font-size: 13px; color: rgba(255,255,255,.4); }

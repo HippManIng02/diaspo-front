@@ -1,0 +1,109 @@
+<div class="page">
+  <app-navbar></app-navbar>
+
+  <!-- Hero -->
+  <section class="hero-section">
+    <div class="hero-bg-pattern"></div>
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-text fade-up">
+          <div class="hero-eyebrow">
+            <span class="badge badge-gold">🇹🇬 Diaspora Togolaise</span>
+          </div>
+          <h1 class="hero-title">Vos talents,<br><span class="hero-accent">au service du Togo</span></h1>
+          <p class="hero-desc">La plateforme qui connecte la diaspora togolaise en France aux opportunités professionnelles en Afrique. Créez votre profil et faites-vous trouver par les recruteurs.</p>
+          <div class="hero-actions">
+            <a routerLink="/register" class="btn btn-primary btn-lg">Créer mon profil</a>
+            <a routerLink="/search"   class="btn btn-outline btn-lg" style="border-color:rgba(255,255,255,.5);color:#fff">Explorer les talents</a>
+          </div>
+          <div class="hero-stats">
+            <div class="hs-item"><span class="hs-num">500+</span><span class="hs-label">Profils actifs</span></div>
+            <div class="hs-sep"></div>
+            <div class="hs-item"><span class="hs-num">120+</span><span class="hs-label">Recruteurs</span></div>
+            <div class="hs-sep"></div>
+            <div class="hs-item"><span class="hs-num">30+</span><span class="hs-label">Secteurs</span></div>
+          </div>
+        </div>
+
+        <div class="hero-card-stack fade-up-2">
+          <div class="profile-preview-card">
+            <div class="ppc-header">
+              <div class="avatar avatar-lg avatar-gold">KA</div>
+              <div>
+                <div class="ppc-name">Kwame Adjété</div>
+                <div class="ppc-title">Ingénieur Génie Civil</div>
+                <div class="ppc-location">📍 Paris → Lomé</div>
+              </div>
+            </div>
+            <div class="ppc-skills">
+              <span class="skill-pill"><span class="skill-dot expert"></span>AutoCAD</span>
+              <span class="skill-pill"><span class="skill-dot expert"></span>BIM / Revit</span>
+              <span class="skill-pill"><span class="skill-dot intermediaire"></span>Gestion de projet</span>
+            </div>
+            <div class="ppc-footer">
+              <span class="badge badge-green">● Disponible</span>
+              <span class="ppc-exp">8 ans d'expérience</span>
+            </div>
+          </div>
+
+          <div class="profile-preview-card mini">
+            <div class="avatar avatar-sm avatar-gold">AM</div>
+            <div><div class="ppc-name sm">Abena Mensah</div><div class="ppc-title">Médecin Cardiologue</div></div>
+            <span class="badge badge-green" style="margin-left:auto">Disponible</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section" style="background:var(--sand)">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title" style="text-align:center">Comment ça marche ?</h2>
+        <p class="section-sub">En 3 étapes simples, connectez vos compétences aux opportunités togolaises</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card" *ngFor="let s of steps; let i = index">
+          <div class="step-num">{{ i + 1 }}</div>
+          <div class="step-icon">{{ s.icon }}</div>
+          <h3 class="step-title">{{ s.title }}</h3>
+          <p class="step-desc">{{ s.desc }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sectors -->
+  <section class="section" style="background:#fff">
+    <div class="container">
+      <h2 class="section-title" style="text-align:center;margin-bottom:2rem">Secteurs représentés</h2>
+      <div class="sectors-grid">
+        <div class="sector-chip" *ngFor="let s of sectors"><span>{{ s.icon }}</span> {{ s.name }}</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" style="background:var(--sand)">
+    <div class="container">
+      <div class="cta-box">
+        <div class="cta-deco"></div>
+        <h2 class="cta-title">Rejoignez la communauté<br><span>TogoLink</span> dès aujourd'hui</h2>
+        <p class="cta-sub">Que vous soyez membre de la diaspora ou recruteur au Togo, TogoLink est votre pont vers l'Afrique.</p>
+        <div class="cta-actions">
+          <a routerLink="/register" class="btn btn-gold btn-lg">Créer un compte gratuit</a>
+          <a routerLink="/search"   class="btn btn-outline btn-lg" style="border-color:rgba(255,255,255,.5);color:#fff">Voir les profils</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="navbar-logo">Togo<span>Link</span></div>
+      <p class="footer-copy">© 2026 TogoLink — Diaspora Togolaise · France</p>
+    </div>
+  </footer>
+</div>

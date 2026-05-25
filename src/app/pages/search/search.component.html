@@ -1,0 +1,88 @@
+<div class="page">
+  <app-navbar></app-navbar>
+
+  <div class="search-hero">
+    <div class="container">
+      <h2 class="sh-title fade-up">Trouver un talent de la diaspora</h2>
+      <p class="sh-sub fade-up-2">Recherchez parmi les professionnels togolais disponibles</p>
+      <div class="search-bar fade-up-2">
+        <span class="sb-icon">🔍</span>
+        <input [ngModel]="query()" (ngModelChange)="query.set($event)"
+          type="text" placeholder="Ingénieur, Médecin, Développeur..." class="sb-input" />
+        <button class="btn btn-primary">Rechercher</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container search-layout">
+    <!-- Filters -->
+    <aside class="filters-panel">
+      <div class="fp-header">Filtres</div>
+
+      <div class="filter-group">
+        <div class="fg-label">Disponibilité</div>
+        <div class="fg-options">
+          <label *ngFor="let d of dispos" class="filter-check">
+            <input type="radio" [ngModel]="dispo()" (ngModelChange)="dispo.set($event)"
+              [value]="d.value" name="dispo" />
+            <span>{{ d.label }}</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="fg-label">Localisation souhaitée</div>
+        <select [ngModel]="location()" (ngModelChange)="location.set($event)" class="form-select">
+          <option value="">Toutes</option>
+          <option value="Lomé">Lomé, Togo</option>
+          <option value="Kara">Kara, Togo</option>
+          <option value="Afrique">Afrique de l'Ouest</option>
+        </select>
+      </div>
+
+      <button class="btn btn-ghost btn-sm" style="width:100%;margin-top:.5rem" (click)="reset()">Réinitialiser</button>
+    </aside>
+
+    <!-- Results -->
+    <div class="results-area">
+      <div class="results-header">
+        <span class="results-count">{{ filtered.length }} profil{{ filtered.length > 1 ? 's' : '' }} trouvé{{ filtered.length > 1 ? 's' : '' }}</span>
+        <select [ngModel]="sortBy()" (ngModelChange)="sortBy.set($event)" class="form-select" style="width:auto;font-size:13px">
+          <option value="name">Trier par nom</option>
+          <option value="exp">Par expérience</option>
+        </select>
+      </div>
+
+      <div class="results-grid">
+        <div class="profile-card" *ngFor="let p of filtered" (click)="goTo(p.id)">
+          <div class="pc-header">
+            <div class="avatar avatar-md avatar-gold">{{ p.firstname[0] }}{{ p.lastname[0] }}</div>
+            <div class="pc-info">
+              <div class="pc-name">{{ p.firstname }} {{ p.lastname }}</div>
+              <div class="pc-title">{{ p.profile.title }}</div>
+            </div>
+            <span [class]="'badge ' + availClass(p.disponibility)">{{ availLabel(p.disponibility) }}</span>
+          </div>
+          <p class="pc-resume">{{ p.profile.resume.slice(0, 110) }}...</p>
+          <div class="pc-skills">
+            <span class="skill-pill" *ngFor="let c of p.competences.slice(0,3)">
+              <span class="skill-dot" [class]="c.niveau"></span>{{ c.nom }}
+            </span>
+            <span *ngIf="p.competences.length > 3" class="skill-more">+{{ p.competences.length - 3 }}</span>
+          </div>
+          <div class="pc-footer">
+            <span class="pc-location">📍 {{ p.pays }} → {{ p.profile.desiredLocation }}</span>
+            <span class="pc-exp">{{ p.experiences.length }} exp.</span>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="filtered.length === 0" class="empty-state">
+        <div class="es-icon">🔍</div>
+        <div class="es-title">Aucun profil trouvé</div>
+        <p class="es-sub">Essayez d'autres mots-clés ou élargissez vos filtres</p>
+        <button class="btn btn-outline" (click)="reset()">Réinitialiser les filtres</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,91 @@
+<div class="auth-page">
+  <div class="auth-left">
+    <div class="auth-brand">
+      <a routerLink="/" class="navbar-logo">Togo<span>Link</span></a>
+    </div>
+    <div class="auth-illustration">
+      <div class="ai-circle ai-c1"></div>
+      <div class="ai-circle ai-c2"></div>
+      <div class="ai-quote">
+        <p>"Connecter la diaspora togolaise aux opportunités de demain."</p>
+      </div>
+      <div class="ai-stats">
+        <div class="ai-stat"><strong>500+</strong><span>Profils</span></div>
+        <div class="ai-stat"><strong>120+</strong><span>Recruteurs</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-right">
+    <div class="auth-form-box fade-up">
+      <h2 class="auth-title">{{ isLogin ? 'Bon retour !' : 'Créer un compte' }}</h2>
+      <p class="auth-sub">{{ isLogin ? 'Connectez-vous à votre espace TogoLink' : 'Rejoignez la communauté de la diaspora togolaise' }}</p>
+
+      <form (ngSubmit)="submit()" #authForm="ngForm">
+        <ng-container *ngIf="!isLogin">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Prénom</label>
+              <input [(ngModel)]="form.firstname" name="firstname" type="text" class="form-input" placeholder="Kwame" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Nom</label>
+              <input [(ngModel)]="form.lastname" name="lastname" type="text" class="form-input" placeholder="Adjété" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Téléphone</label>
+            <input [(ngModel)]="form.tel" name="tel" type="tel" class="form-input" placeholder="+33 6 12 34 56 78" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Pays de résidence</label>
+            <select [(ngModel)]="form.pays" name="pays" class="form-select">
+              <option>France</option><option>Belgique</option>
+              <option>Suisse</option><option>Canada</option><option>Autre</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Je suis</label>
+            <div class="role-selector">
+              <button type="button" [class.active]="form.role === 'membre'" (click)="form.role='membre'" class="role-opt">
+                <span>👤</span> Membre diaspora
+              </button>
+              <button type="button" [class.active]="form.role === 'recruteur'" (click)="form.role='recruteur'" class="role-opt">
+                <span>🏢</span> Recruteur
+              </button>
+            </div>
+          </div>
+        </ng-container>
+
+        <div class="form-group">
+          <label class="form-label">Adresse e-mail</label>
+          <input [(ngModel)]="form.email" name="email" type="email" class="form-input" placeholder="kwame@email.com" required />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Mot de passe</label>
+          <div class="input-password">
+            <input [(ngModel)]="form.password" name="password" [type]="showPwd() ? 'text' : 'password'" class="form-input" placeholder="••••••••" required />
+            <button type="button" class="pwd-toggle" (click)="showPwd.update(v => !v)">{{ showPwd() ? '🙈' : '👁️' }}</button>
+          </div>
+        </div>
+
+        <div class="auth-error" *ngIf="error()">{{ error() }}</div>
+
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%" [disabled]="loading() || authForm.invalid">
+          <span *ngIf="loading()">⏳ Chargement...</span>
+          <span *ngIf="!loading()">{{ isLogin ? 'Se connecter' : 'Créer mon compte' }}</span>
+        </button>
+      </form>
+
+      <div class="auth-divider"><span>ou</span></div>
+
+      <p class="auth-switch">
+        {{ isLogin ? 'Pas encore de compte ?' : 'Déjà un compte ?' }}
+        <a [routerLink]="isLogin ? '/register' : '/login'" class="auth-link">
+          {{ isLogin ? "S'inscrire gratuitement" : 'Se connecter' }}
+        </a>
+      </p>
+    </div>
+  </div>
+</div>

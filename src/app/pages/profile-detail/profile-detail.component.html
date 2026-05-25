@@ -1,0 +1,114 @@
+<div class="page">
+  <app-navbar></app-navbar>
+  <div class="container" style="padding-top:2rem;padding-bottom:3rem">
+    <div class="detail-layout">
+
+      <!-- Main -->
+      <div class="detail-main">
+        <button class="back-btn" (click)="router.navigate(['/search'])">← Retour aux résultats</button>
+
+        <div class="profile-hero fade-up" style="margin-bottom:1rem">
+          <div class="ph-inner">
+            <div class="avatar avatar-lg avatar-gold">{{ initials }}</div>
+            <div>
+              <h1 class="ph-name">{{ profile.firstname }} {{ profile.lastname }}</h1>
+              <p class="ph-title">{{ profile.profile.title }}</p>
+              <div class="ph-meta">
+                <span>📍 {{ profile.pays }} → {{ profile.profile.desiredLocation }}</span>
+                <span>💼 {{ profile.experiences.length }} expériences</span>
+                <span>🎓 {{ profile.formations.length }} formations</span>
+              </div>
+              <div class="ph-badges">
+                <span [class]="'badge ' + availClass">{{ availLabel }}</span>
+                <span class="badge badge-gray" *ngFor="let r of profile.roles">{{ r.name }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card fade-up-2" style="margin-bottom:1rem">
+          <div class="card-title">Résumé</div>
+          <p style="font-size:14px;line-height:1.7">{{ profile.profile.resume }}</p>
+        </div>
+
+        <div class="card fade-up-2" style="margin-bottom:1rem">
+          <div class="card-title">Expériences professionnelles</div>
+          <div *ngFor="let e of profile.experiences; let i = index; let last = last" class="exp-item">
+            <div class="exp-timeline"><div class="exp-dot"></div><div class="exp-line" *ngIf="!last"></div></div>
+            <div class="exp-content">
+              <div class="exp-header">
+                <div><div class="exp-poste">{{ e.poste }}</div><div class="exp-ent">{{ e.entreprise }}</div></div>
+                <span class="exp-dates">{{ formatDate(e.dateDebut) }} — {{ formatDate(e.dateFin) }}</span>
+              </div>
+              <p class="exp-desc">{{ e.description }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card fade-up-3" style="margin-bottom:1rem">
+          <div class="card-title">Formations</div>
+          <div class="form-item" *ngFor="let f of profile.formations">
+            <div class="form-year-badge">{{ f.annee }}</div>
+            <div><div class="form-diplome">{{ f.diplome }}</div><div class="form-ecole">{{ f.ecole }}</div></div>
+          </div>
+        </div>
+
+        <div class="two-col fade-up-4">
+          <div class="card">
+            <div class="card-title">Compétences</div>
+            <span class="skill-pill" *ngFor="let c of profile.competences"><span class="skill-dot" [class]="c.niveau"></span>{{ c.nom }}</span>
+            <div class="legend" style="margin-top:.75rem">
+              <span class="legend-item"><span class="skill-dot expert"></span> Expert</span>
+              <span class="legend-item"><span class="skill-dot intermediaire"></span> Intermédiaire</span>
+              <span class="legend-item"><span class="skill-dot debutant"></span> Débutant</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Langues</div>
+            <div class="lang-row" *ngFor="let l of profile.langues">
+              <span class="lang-name">{{ l.name }}</span>
+              <div class="lang-track"><div class="lang-fill" [style.width.%]="l.pct"></div></div>
+              <span class="lang-level">{{ l.level }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="detail-side">
+        <div class="card contact-card fade-up">
+          <div class="cc-header">Contacter ce candidat</div>
+          <div class="cc-info">
+            <div class="cc-item"><span>📧</span> {{ profile.email }}</div>
+            <div class="cc-item"><span>📞</span> {{ profile.tel }}</div>
+          </div>
+          <div class="form-group" style="margin-top:1rem;margin-bottom:1rem">
+            <label class="form-label">Votre message</label>
+            <textarea [ngModel]="message()" (ngModelChange)="message.set($event)" class="form-textarea" rows="4" placeholder="Bonjour, je suis intéressé par votre profil..."></textarea>
+          </div>
+          <button class="btn btn-primary" style="width:100%" (click)="sendMessage()">Envoyer le message</button>
+          <div class="msg-sent" *ngIf="messageSent()">✅ Message envoyé avec succès !</div>
+        </div>
+
+        <div class="card fade-up-2" style="margin-top:1rem">
+          <div class="card-title">Informations clés</div>
+          <div class="ki-list">
+            <div class="ki-item" *ngFor="let ki of quickInfos">
+              <span class="ki-label">{{ ki.label }}</span>
+              <span class="ki-value">{{ ki.value }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card fade-up-3" style="margin-top:1rem">
+          <div class="card-title">Profils similaires</div>
+          <div class="sim-item" *ngFor="let p of similar" (click)="router.navigate(['/profile', p.id])">
+            <div class="avatar avatar-sm avatar-gold">{{ p.firstname[0] }}{{ p.lastname[0] }}</div>
+            <div><div class="sim-name">{{ p.firstname }} {{ p.lastname }}</div><div class="sim-title">{{ p.profile.title }}</div></div>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</div>
