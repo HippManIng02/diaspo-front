@@ -1,0 +1,96 @@
+<div class="page">
+  <app-navbar></app-navbar>
+  <div class="container-sm" style="padding-top:2rem;padding-bottom:3rem">
+
+    <!-- Hero -->
+    <div class="profile-hero fade-up" style="margin-bottom:1rem">
+      <div class="ph-inner">
+        <div class="avatar avatar-lg avatar-gold">{{ initials }}</div>
+        <div class="ph-info">
+          <h1 class="ph-name">{{ profile.firstname }} {{ profile.lastname }}</h1>
+          <p class="ph-title">{{ profile.profile.title }}</p>
+          <div class="ph-meta">
+            <span>📍 {{ profile.pays }} → {{ profile.profile.desiredLocation }}</span>
+            <span>📞 {{ profile.tel }}</span>
+          </div>
+          <div class="ph-badges">
+            <span [class]="'badge ' + availBadge.cls">{{ availBadge.icon }} {{ availBadge.label }}</span>
+            <span class="badge badge-gray" *ngFor="let r of profile.roles">{{ r.name }}</span>
+            <span class="badge badge-gold" *ngIf="profile.visible">Profil public</span>
+          </div>
+        </div>
+      </div>
+      <div class="ph-actions">
+        <a routerLink="/profile/edit" class="btn btn-outline btn-sm">Modifier</a>
+        <button class="btn btn-primary btn-sm" (click)="share()">Partager le profil</button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="profile-stats fade-up-2">
+      <div class="ps-item" *ngFor="let s of stats">
+        <span class="ps-num">{{ s.num }}</span>
+        <span class="ps-label">{{ s.label }}</span>
+      </div>
+    </div>
+
+    <!-- Resume -->
+    <div class="card fade-up-2" style="margin-bottom:1rem">
+      <div class="card-title">Résumé professionnel</div>
+      <div class="resume-box">{{ profile.profile.resume }}</div>
+    </div>
+
+    <!-- Experiences -->
+    <div class="card fade-up-3" style="margin-bottom:1rem">
+      <div class="card-title">Expériences professionnelles</div>
+      <div *ngFor="let e of profile.experiences; let i = index; let last = last" class="exp-item">
+        <div class="exp-timeline">
+          <div class="exp-dot"></div>
+          <div class="exp-line" *ngIf="!last"></div>
+        </div>
+        <div class="exp-content">
+          <div class="exp-header">
+            <div><div class="exp-poste">{{ e.poste }}</div><div class="exp-ent">{{ e.entreprise }}</div></div>
+            <span class="exp-dates">{{ formatDate(e.dateDebut) }} — {{ formatDate(e.dateFin) }}</span>
+          </div>
+          <p class="exp-desc">{{ e.description }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formations -->
+    <div class="card fade-up-3" style="margin-bottom:1rem">
+      <div class="card-title">Formations</div>
+      <div class="form-item" *ngFor="let f of profile.formations">
+        <div class="form-year-badge">{{ f.annee }}</div>
+        <div><div class="form-diplome">{{ f.diplome }}</div><div class="form-ecole">{{ f.ecole }}</div></div>
+      </div>
+    </div>
+
+    <!-- Skills + Langs -->
+    <div class="two-col fade-up-4">
+      <div class="card">
+        <div class="card-title">Compétences</div>
+        <div>
+          <span class="skill-pill" *ngFor="let c of profile.competences">
+            <span class="skill-dot" [class]="c.niveau"></span>{{ c.nom }}
+          </span>
+        </div>
+        <div class="legend" style="margin-top:1rem">
+          <span class="legend-item"><span class="skill-dot expert"></span> Expert</span>
+          <span class="legend-item"><span class="skill-dot intermediaire"></span> Intermédiaire</span>
+          <span class="legend-item"><span class="skill-dot debutant"></span> Débutant</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Langues</div>
+        <div class="lang-row" *ngFor="let l of profile.langues">
+          <span class="lang-name">{{ l.name }}</span>
+          <div class="lang-track"><div class="lang-fill" [style.width.%]="l.pct"></div></div>
+          <span class="lang-level">{{ l.level }}</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

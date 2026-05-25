@@ -1,0 +1,149 @@
+<div class="page">
+  <app-navbar></app-navbar>
+  <div class="container-sm" style="padding-top:2rem;padding-bottom:5rem">
+
+    <div class="edit-header fade-up">
+      <h2 class="section-title" style="margin-bottom:4px">Éditer mon profil</h2>
+      <p style="font-size:13px;color:var(--text-muted)">Mettez à jour vos informations pour être trouvé par les recruteurs</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="edit-tabs fade-up-2">
+      <button *ngFor="let t of tabs" [class.active]="activeTab() === t.key"
+        class="edit-tab" (click)="activeTab.set(t.key)">
+        {{ t.icon }} {{ t.label }}
+      </button>
+    </div>
+
+    <!-- Tab: Infos -->
+    <div *ngIf="activeTab() === 'info'" class="card tab-panel fade-up-3">
+      <div class="card-title">Informations personnelles</div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Prénom</label><input [(ngModel)]="form.firstname" class="form-input" /></div>
+        <div class="form-group"><label class="form-label">Nom</label><input [(ngModel)]="form.lastname" class="form-input" /></div>
+      </div>
+      <div class="form-group"><label class="form-label">Email</label><input [(ngModel)]="form.email" type="email" class="form-input" /></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Téléphone</label><input [(ngModel)]="form.tel" class="form-input" /></div>
+        <div class="form-group">
+          <label class="form-label">Pays</label>
+          <select [(ngModel)]="form.pays" class="form-select">
+            <option>France</option><option>Belgique</option><option>Suisse</option><option>Canada</option><option>Autre</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Disponibilité</label>
+        <select [(ngModel)]="form.disponibility" class="form-select">
+          <option value="disponible">Disponible</option>
+          <option value="ouvert">Ouvert aux offres</option>
+          <option value="indisponible">Indisponible</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Visibilité</label>
+        <div class="toggle-row">
+          <input type="checkbox" [(ngModel)]="form.visible" id="vis" class="toggle-input" />
+          <label for="vis" class="toggle-label">
+            <div class="toggle-track"><div class="toggle-thumb"></div></div>
+            <span>{{ form.visible ? 'Profil public (visible par les recruteurs)' : 'Profil masqué' }}</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Profil -->
+    <div *ngIf="activeTab() === 'profile'" class="card tab-panel fade-up-3">
+      <div class="card-title">Informations du profil</div>
+      <div class="form-group"><label class="form-label">Titre professionnel</label><input [(ngModel)]="form.profile.title" class="form-input" placeholder="ex: Ingénieur Génie Civil Senior" /></div>
+      <div class="form-group">
+        <label class="form-label">Résumé professionnel</label>
+        <textarea [(ngModel)]="form.profile.resume" class="form-textarea" rows="5" placeholder="Décrivez votre parcours..."></textarea>
+        <div class="char-count">{{ form.profile.resume.length || 0 }} / 500</div>
+      </div>
+      <div class="form-group"><label class="form-label">Localisation désirée</label><input [(ngModel)]="form.profile.desiredLocation" class="form-input" placeholder="ex: Lomé, Togo" /></div>
+    </div>
+
+    <!-- Tab: Expériences -->
+    <div *ngIf="activeTab() === 'experiences'" class="tab-panel">
+      <div class="card" *ngFor="let e of form.experiences; let i = index; trackBy: trackByIndex" style="margin-bottom:.75rem">
+        <div class="card-item-header">
+          <div class="card-title" style="margin-bottom:0">Expérience {{ i + 1 }}</div>
+          <button class="btn-remove" (click)="removeExp(i)">✕ Supprimer</button>
+        </div>
+        <hr class="divider">
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Poste</label><input [(ngModel)]="e.poste" class="form-input" placeholder="Chef de projet" /></div>
+          <div class="form-group"><label class="form-label">Entreprise</label><input [(ngModel)]="e.entreprise" class="form-input" /></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Date début</label><input [(ngModel)]="e.dateDebut" type="month" class="form-input" /></div>
+          <div class="form-group"><label class="form-label">Date fin (vide = présent)</label><input [(ngModel)]="e.dateFin" type="month" class="form-input" /></div>
+        </div>
+        <div class="form-group" style="margin-bottom:0"><label class="form-label">Description</label><textarea [(ngModel)]="e.description" class="form-textarea" rows="2"></textarea></div>
+      </div>
+      <button class="btn btn-outline" style="width:100%" (click)="addExp()">+ Ajouter une expérience</button>
+    </div>
+
+    <!-- Tab: Formations -->
+    <div *ngIf="activeTab() === 'formations'" class="tab-panel">
+      <div class="card" *ngFor="let f of form.formations; let i = index; trackBy: trackByIndex" style="margin-bottom:.75rem">
+        <div class="card-item-header">
+          <div class="card-title" style="margin-bottom:0">Formation {{ i + 1 }}</div>
+          <button class="btn-remove" (click)="removeFormation(i)">✕ Supprimer</button>
+        </div>
+        <hr class="divider">
+        <div class="form-group"><label class="form-label">Diplôme</label><input [(ngModel)]="f.diplome" class="form-input" /></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">École</label><input [(ngModel)]="f.ecole" class="form-input" /></div>
+          <div class="form-group" style="max-width:120px"><label class="form-label">Année</label><input [(ngModel)]="f.annee" type="number" class="form-input" /></div>
+        </div>
+      </div>
+      <button class="btn btn-outline" style="width:100%" (click)="addFormation()">+ Ajouter une formation</button>
+    </div>
+
+    <!-- Tab: Compétences -->
+    <div *ngIf="activeTab() === 'competences'" class="card tab-panel fade-up-3">
+      <div class="card-title">Compétences</div>
+      <div class="comp-list">
+        <div class="comp-item" *ngFor="let c of form.competences; let i = index; trackBy: trackByIndex">
+          <input [(ngModel)]="c.nom" class="form-input" placeholder="Compétence" style="flex:1" />
+          <select [(ngModel)]="c.niveau" class="form-select" style="width:150px">
+            <option value="expert">Expert</option>
+            <option value="intermediaire">Intermédiaire</option>
+            <option value="debutant">Débutant</option>
+          </select>
+          <button class="btn-remove icon-only" (click)="removeComp(i)">✕</button>
+        </div>
+      </div>
+      <button class="btn btn-outline btn-sm" style="margin-top:.75rem" (click)="addComp()">+ Ajouter</button>
+    </div>
+
+    <!-- Tab: Langues -->
+    <div *ngIf="activeTab() === 'langues'" class="card tab-panel fade-up-3">
+      <div class="card-title">Langues</div>
+      <div class="comp-list">
+        <div class="comp-item" *ngFor="let l of form.langues; let i = index; trackBy: trackByIndex">
+          <input [(ngModel)]="l.name" class="form-input" placeholder="Langue" style="flex:1" />
+          <select [(ngModel)]="l.level" class="form-select" style="width:140px" (ngModelChange)="updatePct(l)">
+            <option>Natif</option><option>Courant</option><option>Avancé</option><option>Intermédiaire</option><option>Notions</option>
+          </select>
+          <button class="btn-remove icon-only" (click)="removeLang(i)">✕</button>
+        </div>
+      </div>
+      <button class="btn btn-outline btn-sm" style="margin-top:.75rem" (click)="addLang()">+ Ajouter une langue</button>
+    </div>
+
+    <!-- Save bar -->
+    <div class="save-bar fade-up-4">
+      <p class="save-info">{{ saved() ? '✅ Modifications enregistrées !' : 'Vos modifications ne sont pas encore sauvegardées' }}</p>
+      <div style="display:flex;gap:8px">
+        <a routerLink="/profile" class="btn btn-ghost">Annuler</a>
+        <button class="btn btn-primary" (click)="save()" [disabled]="saving()">
+          {{ saving() ? '⏳ Sauvegarde...' : '💾 Enregistrer' }}
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

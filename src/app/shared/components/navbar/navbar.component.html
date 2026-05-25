@@ -1,0 +1,25 @@
+<nav class="navbar">
+  <a routerLink="/" class="navbar-logo">Togo<span>Link</span></a>
+
+  <div class="navbar-links">
+    <a *ngIf="auth.isLoggedIn" routerLink="/dashboard" routerLinkActive="active" class="nav-link">Tableau de bord</a>
+    <a routerLink="/search" routerLinkActive="active" class="nav-link">Rechercher</a>
+
+    <ng-container *ngIf="auth.isLoggedIn; else guestTpl">
+      <a routerLink="/profile" routerLinkActive="active" class="nav-link">Mon profil</a>
+      <div class="nav-avatar" (click)="toggleMenu()" (clickOutside)="closeMenu()">
+        <div class="avatar avatar-sm avatar-gold">{{ auth.initials }}</div>
+        <div class="dropdown" *ngIf="menuOpen()">
+          <a routerLink="/profile/edit" class="dropdown-item" (click)="closeMenu()">Éditer le profil</a>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item danger" (click)="logout()">Se déconnecter</button>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #guestTpl>
+      <a routerLink="/login" class="btn btn-ghost btn-sm">Connexion</a>
+      <a routerLink="/register" class="btn btn-primary btn-sm">S'inscrire</a>
+    </ng-template>
+  </div>
+</nav>

@@ -1,0 +1,91 @@
+<div class="page">
+  <app-navbar></app-navbar>
+  <div class="container" style="padding-top:2rem;padding-bottom:3rem">
+
+    <!-- Banner -->
+    <div class="dash-banner fade-up">
+      <div class="dash-banner-left">
+        <div class="avatar avatar-lg avatar-gold">{{ initials }}</div>
+        <div>
+          <p class="dash-greeting">Bonjour,</p>
+          <h2 class="dash-name">{{ user?.firstname }} {{ user?.lastname }}</h2>
+          <p class="dash-role">{{ user?.profile?.title || 'Complétez votre profil' }}</p>
+        </div>
+      </div>
+      <div class="dash-banner-right">
+        <div class="dash-completion">
+          <div class="dc-label">Profil complété à</div>
+          <div class="dc-num">{{ profileCompletion }}%</div>
+          <div class="dc-bar"><div class="dc-fill" [style.width.%]="profileCompletion"></div></div>
+        </div>
+        <a routerLink="/profile/edit" class="btn btn-gold btn-sm">Compléter →</a>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid fade-up-2">
+      <div class="stat-box" *ngFor="let s of stats">
+        <div class="sb-icon">{{ s.icon }}</div>
+        <div class="sb-num">{{ s.num }}</div>
+        <div class="sb-label">{{ s.label }}</div>
+      </div>
+    </div>
+
+    <div class="dash-grid">
+      <!-- Main col -->
+      <div>
+        <div class="card fade-up-2" style="margin-bottom:1rem">
+          <div class="card-title">Actions rapides</div>
+          <div class="quick-actions">
+            <a routerLink="/profile/edit" class="qa-btn"><span class="qa-icon">✏️</span><span>Modifier le profil</span></a>
+            <a routerLink="/profile"      class="qa-btn"><span class="qa-icon">👁️</span><span>Voir mon profil</span></a>
+            <a routerLink="/search"       class="qa-btn"><span class="qa-icon">🔍</span><span>Explorer</span></a>
+            <button class="qa-btn"><span class="qa-icon">{{ user?.visible ? '🟢' : '🔴' }}</span><span>{{ user?.visible ? 'Visible' : 'Masqué' }}</span></button>
+          </div>
+        </div>
+
+        <div class="card fade-up-3">
+          <div class="card-title">Vues récentes de votre profil</div>
+          <div class="view-item" *ngFor="let v of recentViews">
+            <div class="avatar avatar-sm avatar-green">{{ v.initials }}</div>
+            <div><div class="vi-name">{{ v.name }}</div><div class="vi-company">{{ v.company }}</div></div>
+            <div class="vi-time">{{ v.time }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Side col -->
+      <div>
+        <div class="card fade-up-2" style="margin-bottom:1rem">
+          <div class="card-title">Statut de disponibilité</div>
+          <div class="dispos">
+            <button *ngFor="let d of dispos" [class.active]="selectedDispo() === d.value"
+              class="dispo-btn" (click)="selectedDispo.set(d.value)">
+              <span class="dispo-dot" [class]="'dispo-' + d.value"></span>{{ d.label }}
+            </button>
+          </div>
+        </div>
+
+        <div class="card fade-up-3">
+          <div class="card-title">Aperçu du profil</div>
+          <div style="display:flex;gap:10px;align-items:center;margin-bottom:1rem">
+            <div class="avatar avatar-md avatar-gold">{{ initials }}</div>
+            <div>
+              <div style="font-weight:500;font-size:14px">{{ user?.firstname }} {{ user?.lastname }}</div>
+              <div style="font-size:12px;color:var(--text-muted)">{{ user?.profile?.title || '—' }}</div>
+            </div>
+          </div>
+          <div class="pm-location">📍 {{ user?.pays }} → {{ user?.profile?.desiredLocation || 'Non renseigné' }}</div>
+          <hr class="divider">
+          <div>
+            <span class="skill-pill" *ngFor="let c of (user?.competences || []).slice(0,3)">
+              <span class="skill-dot" [class]="c.niveau"></span>{{ c.nom }}
+            </span>
+            <span *ngIf="!user?.competences?.length" style="font-size:12px;color:var(--text-muted)">Aucune compétence</span>
+          </div>
+          <a routerLink="/profile" class="btn btn-outline btn-sm" style="margin-top:1rem;width:100%;justify-content:center">Voir le profil public</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
